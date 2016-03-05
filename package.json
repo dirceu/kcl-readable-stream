@@ -1,0 +1,23 @@
+{
+  "name": "kcl-readable-stream",
+  "version": "0.1.0",
+  "description": "Make a KCL object work as a readable stream",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --timeout 1000 test/tests.js"
+  },
+  "keywords": [
+    "kcl",
+    "kinesis",
+    "aws",
+    "streams"
+  ],
+  "author": "Dirceu Pereira Tiegs <dirceutiegs@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "aws-kcl": "^0.5.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.4.5"
+  }
+}
