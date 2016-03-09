@@ -1,5 +1,7 @@
 # kcl-readable-stream
 
+[![Build Status](https://travis-ci.org/dirceu/kcl-readable-stream.svg?branch=master)](https://travis-ci.org/dirceu/kcl-readable-stream)
+
 This project convert a [KCL](https://github.com/awslabs/amazon-kinesis-client-nodejs) object into a readable stream.
 
 There are three (optional) options that can be used in the constructor:
@@ -19,11 +21,11 @@ const KclReadableStream = require('kcl-readable-stream');
 
 const kclProcessor = new KclReadableStream({
   kcl: {
-    initialize: function (data, callback) {
+    initialize: (data, callback) => {
       console.log('Initialized!');
       callback();
     },
-    shutdown: function (data, callback) {
+    shutdown: (data, callback) => {
       console.log('Shutdown!');
       callback();
     },
@@ -32,12 +34,12 @@ const kclProcessor = new KclReadableStream({
 });
 
 // if !streamSingleRecords
-kclProcessor.on('data', function (records) {
+kclProcessor.on('data', (records) => {
   console.log('This is an array of records: ', records);
 });
 
 // if streamSingleRecords === true
-kclProcessor.on('data', function (record) {
+kclProcessor.on('data', (record) => {
   console.log('This is a single record: ', record);
 });
 
