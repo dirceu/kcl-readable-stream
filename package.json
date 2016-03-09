@@ -1,6 +1,6 @@
 {
   "name": "kcl-readable-stream",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Make a KCL object work as a readable stream",
   "main": "index.js",
   "repository": "dirceu/kcl-readable-stream",
