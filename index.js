@@ -12,8 +12,8 @@ function KclReadableStream(options) {
   }
 
   // default KCL options
-  this.initialize = function (input, callback) { callback(); };
-  this.shutdown = function (input, callback) { callback(); };
+  this.initialize = (input, callback) => { callback(); };
+  this.shutdown = (input, callback) => { callback(); };
   this.streamSingleRecords = false;
 
   if (options.kcl) {
@@ -36,9 +36,9 @@ function KclReadableStream(options) {
 
 util.inherits(KclReadableStream, Readable);
 
-KclReadableStream.prototype._read = function() {};
+KclReadableStream.prototype._read = () => {};
 
-KclReadableStream.prototype.processRecords = function processRecords(data, callback) {
+KclReadableStream.prototype.processRecords = function (data, callback) {
   if (!data || !data.records) {
     return callback();
   }

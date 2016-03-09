@@ -3,6 +3,10 @@
   "version": "0.1.0",
   "description": "Make a KCL object work as a readable stream",
   "main": "index.js",
+  "repository": "dirceu/kcl-readable-stream",
+  "engines": {
+    "node": ">=4.3.2"
+  },
   "scripts": {
     "test": "mocha --timeout 1000 test/tests.js"
   },
@@ -12,7 +16,7 @@
     "aws",
     "streams"
   ],
-  "author": "Dirceu Pereira Tiegs <dirceutiegs@gmail.com>",
+  "author": "Dirceu Pereira Tiegs <dirceutiegs@gmail.com> (http://dirceu.info)",
   "license": "ISC",
   "dependencies": {
     "aws-kcl": "^0.5.0"

@@ -6,7 +6,7 @@ There are three (optional) options that can be used in the constructor:
 
 * `kcl.initialize`: Will be called with `data` and `callback` when the KCL subprocess is initialized. The callback function must be called.
 * `kcl.shutdown`: Will be called with `data` and `callback` when the KCL subprocess is shut down because of an error or if the process is stopped. The callback function must be called.
-* `kcl.streamSingleRecords`: If `true`, `data` events will be emitted with single records; otherwise, a list of records will be used. Defaults to `false`.
+* `kcl.streamSingleRecords`: If `true`, `data` events will be emitted with single records; otherwise, an array of records will be used. Defaults to `false`.
 
 ## Example usage
 
@@ -33,7 +33,7 @@ const kclProcessor = new KclReadableStream({
 
 // if !streamSingleRecords
 kclProcessor.on('data', function (records) {
-  console.log('This is the list of records: ', records);
+  console.log('This is an array of records: ', records);
 });
 
 // if streamSingleRecords === true

@@ -3,22 +3,22 @@ const assert = require('assert');
 const stream = require('stream');
 const KclReadableStream = require('../index');
 
-const mockKcl = function (kclProcessor) {
+const mockKcl = (kclProcessor) => {
   return {
-    initialize: function(input) {
-      kclProcessor.initialize(input, function() {});
+    initialize: (input) => {
+      kclProcessor.initialize(input, () => {});
     },
-    shutdown: function(input) {
-      kclProcessor.shutdown(input, function() {});
+    shutdown: (input) => {
+      kclProcessor.shutdown(input, () => {});
     },
-    processRecords: function(input) {
-      kclProcessor.processRecords(input, function() {});
+    processRecords: (input) => {
+      kclProcessor.processRecords(input, () => {});
     }
   };
 };
 
-describe ('KCL object specification', function () {
-  it ('should have all expected methods', function () {
+describe ('KCL object specification', () => {
+  it ('should have all expected methods', () => {
     const kclProcessor = new KclReadableStream();
     assert.ok(kclProcessor.initialize);
     assert.ok(kclProcessor.shutdown);
@@ -26,10 +26,10 @@ describe ('KCL object specification', function () {
     assert.equal(kclProcessor.whateverThisDoesntExist, undefined);
   });
 
-  it ('should call custom initialize method', function () {
+  it ('should call custom initialize method', () => {
     const kclProcessor = new KclReadableStream({
       kcl: {
-        initialize: function (input) {
+        initialize: (input) => {
           assert.equal(input, 'input from initialize');
         }
       }
@@ -37,10 +37,10 @@ describe ('KCL object specification', function () {
     mockKcl(kclProcessor).initialize('input from initialize');
   });
 
-  it ('should call custom shutdown method', function () {
+  it ('should call custom shutdown method', () => {
     const kclProcessor = new KclReadableStream({
       kcl: {
-        shutdown: function (input) {
+        shutdown: (input) => {
           assert.equal(input, 'input from shutdown');
         }
       }
@@ -48,10 +48,10 @@ describe ('KCL object specification', function () {
     mockKcl(kclProcessor).shutdown('input from shutdown');
   });
 
-  it ('should call processRecords', function () {
-    let originalProcessRecords = KclReadableStream.prototype.processRecords;
+  it ('should call processRecords', () => {
+    const originalProcessRecords = KclReadableStream.prototype.processRecords;
     const kclProcessor = new KclReadableStream();
-    KclReadableStream.prototype.processRecords = function (data) {
+    KclReadableStream.prototype.processRecords = (data) => {
       let records = data.records;
       assert.equal(typeof records, 'object');
       assert.equal(records.length, 2);
@@ -63,11 +63,11 @@ describe ('KCL object specification', function () {
   });
 });
 
-describe ('.on("data")', function () {
-  it ('should work with streamSingleRecords === true', function (done) {
+describe ('.on("data")', () => {
+  it ('should work with streamSingleRecords === true', (done) => {
     const kclProcessor = new KclReadableStream({ kcl: { streamSingleRecords: true } });
     let count = 0;
-    kclProcessor.on('data', function (data) {
+    kclProcessor.on('data', (data) => {
       assert.equal(typeof data, 'string');
       assert.ok(['A', 'B', 'C'].indexOf(data) !== -1);
       count++;
@@ -78,9 +78,9 @@ describe ('.on("data")', function () {
     mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] });
   });
 
-  it ('should work with streamSingleRecords === false', function (done) {
+  it ('should work with streamSingleRecords === false', (done) => {
     const kclProcessor = new KclReadableStream({ kcl: { streamSingleRecords: false } });
-    kclProcessor.on('data', function (data) {
+    kclProcessor.on('data', (data) => {
       assert.equal(typeof data, 'object');
       assert.equal(data.length, 3);
       assert.equal(data[0], 'A');
@@ -88,17 +88,17 @@ describe ('.on("data")', function () {
       assert.equal(data[2], 'C');
       done();
     });
-    mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] }, function() {});
+    mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] }, () => {});
   });
 });
 
-describe ('.pipe', function () {
-  it ('should work with streamSingleRecords === true', function (done) {
+describe ('.pipe', () => {
+  it ('should work with streamSingleRecords === true', (done) => {
     const kclProcessor = new KclReadableStream({ kcl: { streamSingleRecords: true } });
     let count = 0;
-    var writableStream = new stream.Writable({
+    const writableStream = new stream.Writable({
       objectMode: true,
-      write: function(data, encoding, next) {
+      write: (data, encoding, next) => {
         assert.equal(typeof data, 'string');
         assert.ok(['A', 'B', 'C'].indexOf(data) !== -1);
         count++;
@@ -113,11 +113,11 @@ describe ('.pipe', function () {
     mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] });
   });
 
-  it ('should work with streamSingleRecords === false', function (done) {
+  it ('should work with streamSingleRecords === false', (done) => {
     const kclProcessor = new KclReadableStream({ kcl: { streamSingleRecords: false } });
-    var writableStream = new stream.Writable({
+    const writableStream = new stream.Writable({
       objectMode: true,
-      write: function(data) {
+      write: (data) => {
         assert.equal(typeof data, 'object');
         assert.equal(data.length, 3);
         assert.equal(data[0], 'A');
@@ -127,6 +127,6 @@ describe ('.pipe', function () {
       }
     });
     kclProcessor.pipe(writableStream);
-    mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] }, function() {});
+    mockKcl(kclProcessor).processRecords({ records: ['A', 'B', 'C'] }, () => {});
   });
 });
