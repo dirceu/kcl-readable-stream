@@ -19,7 +19,7 @@
   "author": "Dirceu Pereira Tiegs <dirceutiegs@gmail.com> (http://dirceu.info)",
   "license": "ISC",
   "dependencies": {
-    "aws-kcl": "^0.5.0"
+    "aws-kcl": "^0.6.0"
   },
   "devDependencies": {
     "mocha": "^2.4.5"
